@@ -159,30 +159,21 @@ class MY_Router extends CI_Router {
         $http_verb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
         $http_verb = strtoupper($http_verb);
 
-        if (isset($this->closure_routes[$http_verb])) {
-            if (isset($this->closure_routes[$http_verb][$this->class])) {
-                if (is_object($this->closure_routes[$http_verb][$this->class])) {
-                    if ($this->closure_routes[$http_verb][$this->class] instanceOf Closure) {
-                        if (is_callable($this->closure_routes[$http_verb][$this->class])) {
-                            $this->closure_routes[$http_verb][$this->class]();
-                            return true;
-                        }
-
-                        return false;
-                    }
-
-                    return false;
-                }
-
-                return false;
-            }
-
-            return false;
-        }
-
+		$method = null;
+		if (isset($this->closure_routes[$http_verb][$this->class])) {
+			$method = $this->closure_routes[$http_verb][$this->class];
+			if (
+				is_object($method) &&
+				$method instanceOf Closure &&
+				is_callable($method)
+			) {
+				$method();
+				return true;
+			}
+		}
         return false;
     }
 }
 
 /* End of file Router.php */
-/* Location: ./system/core/Router.php */
+/* Location: ./application/core/MY_Router.php */
