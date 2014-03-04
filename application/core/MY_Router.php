@@ -167,9 +167,17 @@ class MY_Router extends CI_Router {
                             $this->closure_routes[$http_verb][$this->class]();
                             return true;
                         }
+
+                        return false;
                     }
+
+                    return false;
                 }
+
+                return false;
             }
+
+            return false;
         }
 
         return false;
