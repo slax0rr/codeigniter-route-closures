@@ -380,7 +380,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 		else
 		{
-			show_404($RTR->directory.$class.'/'.$method);
+			$no_routes = false;
+
+			if ($RTR->closure_routes_exists()===true) {
+				if ($RTR->execute_closure_routes()===false) {
+					$no_routes = true;
+				}
+			}
+
+			if ($no_routes===false) {
+				show_404($RTR->directory.$class.'/'.$method);
+			}
 		}
 	}
 
